@@ -1,0 +1,13 @@
+.card{
+    width: 550px;
+    height: 550px;
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50% , -50%);
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+   background-color: #092037;
+
+}
