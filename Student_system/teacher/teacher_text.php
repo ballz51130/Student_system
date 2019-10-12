@@ -1,39 +1,7 @@
 <?php
 session_start();
 include('../conn/connect.php');
-
-if($_SESSION['Type_id'] == 1){
-    $name = "admin";
-    $img = "admin.jpg";
-    error_reporting(0);
-}
-else if($_SESSION['Type_id'] == 2){
-    $sqlTC = "SELECT * FROM teacher_tb WHERE Teach_code = '".$_SESSION['id']."'";
-    $queryTC = $conn->query($sqlTC);
-    $resultTC  = $queryTC ->FETCH_ASSOC();
-    $name = $resultTC['Teach_Pname']." ".$resultTC['Teach_Fname']." ".$resultTC['Teach_Lname'];
-    $birth = $resultTC['Teach_Birth'];
-    $card = $resultTC['Teach_Card'];
-    $code = $resultTC['Teach_code'];
-    $faculty = $resultTC['Teach _Faculty'];
-    $major = $resultTC['Teach _Major'];
-    $img = $resultTC['Teach _Image'];
-}
-else {
-    $sqlSTD = "SELECT * FROM student_tb WHERE Std_code = '".$_SESSION['id']."'";
-    $querySTD = $conn->query($sqlSTD);
-    $resultSTD = $querySTD->FETCH_ASSOC();
-    $name = $resultSTD['Std_Pname']." ".$resultSTD['Std_Fname']." ".$resultSTD['Std_Lname'];
-    $birth = $resultSTD['Std_Birth'];
-    $card = $resultSTD['Std_Card'];
-    $code = $resultSTD['Std_Code'];
-    $faculty = $resultSTD['Std_Faculty'];
-    $major = $resultSTD['Std_Major'];
-    $img = $resultSTD['Std_Image'];
-}
-
 ?>
-
 <!DOCTYPE html>
 <html>
 

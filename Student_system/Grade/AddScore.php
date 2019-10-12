@@ -1,49 +1,15 @@
 <?php
 session_start();
 include_once('../conn/connect.php');
+$SubName = $_SESSION['SubName'];
+$SubCode = $_SESSION['SubCodeED'];
+$StdCode = $_SESSION['StdCode'];
 
-// $_SESSION['ID'];
-// $_GET['ID'] = $_SESSION['ID'];
-if($_SESSION['Type_id'] == 1){
-    $name = "admin";
-    $img = "admin.jpg";
-    error_reporting(0);
-}
-else if($_SESSION['Type_id'] == 2){
-    $sqlTC = "SELECT * FROM teacher_tb WHERE Teach_code = '".$_SESSION['id']."'";
-    $queryTC = $conn->query($sqlTC);
-    $resultTC  = $queryTC ->FETCH_ASSOC();
-    $name = $resultTC['Teach_Pname']." ".$resultTC['Teach_Fname']." ".$resultTC['Teach_Lname'];
-    $birth = $resultTC['Teach_Birth'];
-    $card = $resultTC['Teach_Card'];
-    $code = $resultTC['Teach_code'];
-    $faculty = $resultTC['Teach _Faculty'];
-    $major = $resultTC['Teach _Major'];
-    $img = $resultTC['Teach _Image'];
-}
-else {
-    $sqlSTD = "SELECT * FROM student_tb WHERE Std_code = '".$_SESSION['id']."'";
-    $querySTD = $conn->query($sqlSTD);
-    $resultSTD = $querySTD->FETCH_ASSOC();
-    $name = $resultSTD['Std_Pname']." ".$resultSTD['Std_Fname']." ".$resultSTD['Std_Lname'];
-    $birth = $resultSTD['Std_Birth'];
-    $card = $resultSTD['Std_Card'];
-    $code = $resultSTD['Std_Code'];
-    $faculty = $resultSTD['Std_Faculty'];
-    $major = $resultSTD['Std_Major'];
-    $img = $resultSTD['Std_Image'];
-}
 
-    $_SESSION['StdCode'] = $_GET['StdCode'];
-    $_SESSION['Term'] = $_GET['Term'];
-
-    // $sqlcheckStd = "SELECT * FROM `student_tb` 
-    // WHERE `Std_code` ='".$_SESSION['StdCode']."'";
     $sqlcheckStd = "SELECT register_tb.Std_code, student_tb.Std_Pname, student_tb.Std_Fname, student_tb.Std_Lname, student_tb.Std_Tel, student_tb.Std_Add, student_tb.Std_Birth, student_tb.Std_Card, student_tb.Std_Major, student_tb.Std_Faculty
     FROM `register_tb` 
     INNER JOIN student_tb on register_tb.Std_code = student_tb.Std_Code
-    WHERE register_tb.Std_code ='".$_SESSION['StdCode']."'"; 
-
+    WHERE register_tb.Std_code ='".$_GET['StdCode']."'"; 
     $querycheckStd = $conn->query($sqlcheckStd);
     $resultcheckStd = $querycheckStd->FETCH_ASSOC();
 ?>
@@ -67,6 +33,8 @@ else {
             $_SESSION['SubCodeED'] = $SubCodeED;
             $SubName = $_GET['SubName'];
             $_SESSION['SubName'] = $SubName ;  
+            $_SESSION['StdCode'] = $_GET['StdCode'] ;  
+            $_SESSION['Term'] = $_GET['Term'];
 
             echo $_SESSION['SubCodeED']." - ".$_SESSION['SubName'];
             $sql3 = "SELECT * FROM `grade_tb` WHERE `Std_code`='".$resultcheckStd['Std_code']."' AND `Sub_code` = '$SubCodeED' ";
@@ -103,7 +71,7 @@ else {
 <br>
             <button type="submit" class="btn btn-success mb-2" name="GradeEdit" style="width:150px;">บันทึก</button>
       
-      <a type="back" class="btn btn-secondary mb-2 " style="width:150px;" href="./GradeManager.php?ID=<?php echo $_SESSION['ID'];?> ">กลับหน้าเดิม</a>
+      <a type="back" class="btn btn-secondary mb-2 " style="width:150px;" href="./GradeManager.php?SubName=<?php echo $SubName?>&ID=<?php echo $SubCode ?>">กลับหน้าเดิม</a>
 
   
 

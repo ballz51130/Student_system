@@ -44,6 +44,7 @@ else
     {
         $_SESSION['Type_id'] = 2;
         $_SESSION['Mem_user'] = $result['username'];
+    
         header("location: ../profile/MainProfile.php");
     }
     else

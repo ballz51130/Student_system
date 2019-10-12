@@ -2,37 +2,6 @@
 session_start();
 include_once('../conn/connect.php');
 
-
-if($_SESSION['Type_id'] == 1){
-    $name = "admin";
-    $img = "admin.jpg";
-    error_reporting(0);
-}
-else if($_SESSION['Type_id'] == 2){
-    $sqlTC = "SELECT * FROM teacher_tb WHERE Teach_code = '".$_SESSION['id']."'";
-    $queryTC = $conn->query($sqlTC);
-    $resultTC  = $queryTC ->FETCH_ASSOC();
-    $name = $resultTC['Teach_Pname']." ".$resultTC['Teach_Fname']." ".$resultTC['Teach_Lname'];
-    $birth = $resultTC['Teach_Birth'];
-    $card = $resultTC['Teach_Card'];
-    $code = $resultTC['Teach_code'];
-    $faculty = $resultTC['Teach _Faculty'];
-    $major = $resultTC['Teach _Major'];
-    $img = $resultTC['Teach _Image'];
-}
-else {
-    $sqlSTD = "SELECT * FROM student_tb WHERE Std_code = '".$_SESSION['id']."'";
-    $querySTD = $conn->query($sqlSTD);
-    $resultSTD = $querySTD->FETCH_ASSOC();
-    $name = $resultSTD['Std_Pname']." ".$resultSTD['Std_Fname']." ".$resultSTD['Std_Lname'];
-    $birth = $resultSTD['Std_Birth'];
-    $card = $resultSTD['Std_Card'];
-    $code = $resultSTD['Std_Code'];
-    $faculty = $resultSTD['Std_Faculty'];
-    $major = $resultSTD['Std_Major'];
-    $img = $resultSTD['Std_Image'];
-}
-
 $ID = $_GET['ID'];
 $_SESSION['SubName'] = $_GET['SubName'];
 
@@ -49,25 +18,58 @@ $resultsub = $querysub -> FETCH_ASSOC();
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <title>จัดการผลการเรียน</title>
 
 </head>
+<body class="">
 
-<body class="#">
-   
-<??>
-<?php error_reporting(0); if($_GET['success'] == 1){ ?>
-<div class="alert alert-success mt-2" role="alert">
-สำเร็จ
-</div>
+  <div class="">
+  <form method = 'post'>  
+            <h4>เกณฑ์คะแนน</h4> 
+              
+            <select name = 'subject[]'>   
+            <?php
+			$strSQL = "SELECT * FROM `edit_grade` ORDER BY `edit_grade`.`G_code` ASC ";
+			$objQuery = $conn->query($strSQL);
+      while($objResuut = $objQuery->FETCH_ASSOC())
+			{
+			?>
+			<option value="<?php echo $objResuut["G_code"];?>"><?php echo " รหัสเกณท์ ".$objResuut["G_code"];?></option>
+			<?php
+			}
+			?>
+      </select>
+            <input class="btn btn-info" type = 'submit' name = 'submit' value = เลือก> 
+            <a class="btn btn-info" href ="./editScore.php?ID=<?php echo $_SESSION['Numg'];?>">แก้ไข</a>
+            <a class="btn btn-info" href ="./AddSelectScore.php">เพื่ม</a>
+            <a class="btn btn-info" href="JavaScript:if(confirm('Confirm Delete?')== true){window.location='DelAddScore.php?ID=<?php echo $_SESSION['Numg'];?>';}">ลบ</a>
+        </form> 
+<?php 
+      
+    // Check if form is submitted successfully 
+    if(isset($_POST["submit"]))  
+    { 
+        // Check if any option is selected 
+        if(isset($_POST["subject"]))  
+        { 
+            // Retrieving each selected option 
+            foreach ($_POST['subject'] as $subject)  
+            $sql = "SELECT * FROM edit_grade WHERE G_code ='".$subject."'";
+            $query = mysqli_query($conn, $sql);
+            $result = mysqli_fetch_array($query,MYSQLI_ASSOC);
+    
+           echo "คุณเลือกรหัสเกณท์&nbsp;",$result['G_code'] ,"&emsp;", "A :&nbsp",$result['A'],"&emsp;","B+:&nbsp",$result['B+'],"&emsp;","B:&nbsp",$result['B'],"&emsp;","C+:&nbsp",$result['C+'],"&emsp;","C:&nbsp",$result['C'],"&emsp;","D+:&nbsp",$result['D+'],"&emsp;","D:&nbsp",$result['D'],"&emsp;";
+           $_SESSION['Numg']=$result['G_code'];
 
-<?php }else if($_GET['success'] == 2) { ?>
-<div class="alert alert-danger" role="alert">
-มีบางอย่างผิดพลาด ลองอีกครั้ง
-</div> <?php } error_reporting(0);?>
-<!-- end alert  -->
-            <div class="eiei p-5 mt-5">
+        } 
+    else
+        echo "Select an option first !!"; 
+    } 
+?> 
+  </div>
+  <div class="eiei p-5 mt-5">
             <table class="table table-bordered mt-3">
                     <thead>
                       <tr>
@@ -127,7 +129,7 @@ $resultsub = $querysub -> FETCH_ASSOC();
             </div>
             </td>
             <td><div align="center">
-            <a class="btn btn-info" href ="./AddScore.php?Grade=<?php echo $resultgrade['GPA'];?>&SubCodeED=<?php echo $ID;?>&SubName=<?php echo $resultsub['Sub_Name'];?>&StdCode=<?php echo $resultG['Std_code'];?>&Term=<?php echo $resultG['Cos_term'];?> ">
+            <a class="btn btn-info" href ="./AddScore.php?Grade=<?php echo $resultgrade['GPA'];?>&SubCodeED=<?php echo $ID;?>&SubName=<?php echo $resultsub['Sub_Name'];?>&StdCode=<?php echo $resultG['Std_code'];?>&Term=<?php echo $resultG['Cos_term'];?>">
             จัดการ</a></td>
             </tr>
             <?php }?>  

@@ -135,7 +135,6 @@ else {
         INNER JOIN subject_tb 
         ON course_tb.Sub_code = subject_tb.Sub_code 
         WHERE course_tb.Teach_code = '".$_SESSION['id']."'";
-
         $query = mysqli_query($conn, $sql);
         while($result=mysqli_fetch_array($query,MYSQLI_ASSOC)) 
         {
