@@ -1,10 +1,6 @@
 <?php 
     session_start();
-    $host = "localhost";
-    $uname = "root";
-    $passwd = "";
-    $db = "dbname";
-    $link = mysqli_connect($host,$uname,$passwd,$db);
+    include_once('../conn/connect.php');
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -17,10 +13,10 @@
 </head>
 <body>
 <?php
-    include '../conn/condb.php';
+    
     $ID = $_SESSION['id'];
     $sql = "SELECT * FROM `check_login` WHERE `id` = '".$ID."'"; 
-    $query = mysqli_query($link,$sql);
+    $query = mysqli_query($conn,$sql);
     $result = mysqli_fetch_assoc($query)
 
 

@@ -5,7 +5,7 @@ $username = $_POST['username'];
         $password = $_POST['password'];
         $newpassword = $_POST['newpassword'];
         $confirmnewpassword = $_POST['confirmnewpassword'];
-        $result = mysql_query("SELECT password FROM check_login WHERE username='leonice11'");
+        $result = mysql_query("SELECT password FROM check_login WHERE username='$username'");
         if(!$result)
         {
         echo "The username you entered does not exist";

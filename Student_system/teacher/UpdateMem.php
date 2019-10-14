@@ -35,20 +35,22 @@ if (strlen($password) < 8) {
         
         session_start();
         
-        include_once('../conn/condb.php');
+        include_once('../conn/connect.php');
         $ID = $_SESSION['id'];
-        $sql = "UPDATE check_login
-        SET password = '" . $Md5password . "'
-        WHERE id='" . $ID . "'";
+        $sql = "UPDATE `check_login`
+        SET `password` = '" . $Md5password . "'
+        WHERE username='" . $ID . "'";
 
-        $result = mysqli_query($link, $sql);
+        $result = mysqli_query($conn, $sql);
         if ($result == TRUE) {
             echo "Update Complete";
+            
             echo "<META HTTP-EQUIV='Refresh' CONTENT = '2;URL=../index.php'>";
         } else {
             echo "Error Cann't Update Member";
+
             echo "<META HTTP-EQUIV='Refresh' CONTENT = '2;URL=../index.php'>";
         }
-        mysqli_close($link);
+        mysqli_close($conn);
     }
 }
