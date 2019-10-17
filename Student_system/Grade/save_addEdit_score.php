@@ -17,8 +17,8 @@ $result = mysqli_fetch_array($query,MYSQLI_ASSOC);
 
        if(($grade>100)||($grade<0)) {    
          echo "เกรดที่ได้  : ไม่สามารถคิดเกรดได้ คะแนนเกิน".'<br>';   
-         $gradeSum = $_SESSION['grade_font'];
-         $grade = $_SESSION['GPA'];
+         // $gradeSum = $_SESSION['grade_font'];
+         // $grade = $_SESSION['GPA'];
       }
       else if (($grade>=$result['A'])&&($grade<=100)) {    
          $gradeSum = "A";   
@@ -43,7 +43,7 @@ $result = mysqli_fetch_array($query,MYSQLI_ASSOC);
       }
        else {$gradeSum = "F";}     
          
- echo $gradeSum;
+ //echo $gradeSum;
 // echo $SubCode;
  //echo $_SESSION['SubCodeED'];
 // return false;
@@ -64,6 +64,11 @@ if($querycheck -> num_rows > 0){
    AND `Std_code` ='".$_SESSION['StdCode']."'
    AND `Sub_code` = '".$_SESSION['SubCodeED']."' ";
    $query = $conn->query($sql);
+   $sql2 = "UPDATE `course_tb` SET `Garde_code`= '".$_SESSION['Numg']."' WHERE Cos_term = '".$_SESSION['Term']."' AND Sub_Code = '".$_SESSION['SubCodeED']."'";
+   $query2 = $conn->query($sql2);
+   if($query2==TRUE){
+
+   
 
  //print_r ($sql); 
  //print_r ($query);
@@ -76,6 +81,11 @@ if($querycheck -> num_rows > 0){
    else{
       header("location: ./GradeManager.php?success=2&SubName=$SubName&ID=".$SubCode); 
       }
+   }
+   else{
+      echo "error";
+      header("location: ./GradeManager.php?success=2&SubName=$SubName&ID=".$SubCode); 
+   }
 
 }else{
    //Add grade

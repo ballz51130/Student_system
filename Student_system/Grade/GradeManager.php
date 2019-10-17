@@ -1,7 +1,14 @@
 <?php
 session_start();
 include_once('../conn/connect.php');
-
+$GA=0;
+$GBP=0;
+$GB=0;
+$GCP=0;
+$GC=0;
+$GDP=0;
+$GD=0;
+$GF=0;
 $ID = $_GET['ID'];
 $_SESSION['SubName'] = $_GET['SubName'];
 
@@ -47,6 +54,9 @@ $resultsub = $querysub->FETCH_ASSOC();
       <a class="btn btn-info" href="JavaScript:if(confirm('Confirm Delete?')== true){window.location='DelAddScore.php?ID=<?php echo $_SESSION['Numg']; ?>';}">ลบ</a>
     </form>
     <?php
+$sqlD = "SELECT `ID`, `G_code`, `A`, `B+`, `B`, `C+`, `C`, `D+`, `D` FROM `edit_grade` INNER JOIN course_tb ON course_tb.Garde_code = edit_grade.G_code";
+$queryD = mysqli_query($conn, $sqlD);
+$resultD = mysqli_fetch_array($queryD, MYSQLI_ASSOC);
 
     // Check if form is submitted successfully 
     if (isset($_POST["submit"])) {
@@ -57,15 +67,15 @@ $resultsub = $querysub->FETCH_ASSOC();
           $sql = "SELECT * FROM edit_grade WHERE G_code ='" . $subject . "'";
         $query = mysqli_query($conn, $sql);
         $result = mysqli_fetch_array($query, MYSQLI_ASSOC);
-
-        echo "คุณเลือกรหัสเกณท์&nbsp;", $result['G_code'], "&emsp;", "A :&nbsp", $result['A'], "&emsp;", "B+:&nbsp", $result['B+'], "&emsp;", "B:&nbsp", $result['B'], "&emsp;", "C+:&nbsp", $result['C+'], "&emsp;", "C:&nbsp", $result['C'], "&emsp;", "D+:&nbsp", $result['D+'], "&emsp;", "D:&nbsp", $result['D'], "&emsp;";
-        $_SESSION['Numg'] = $result['G_code'];
+        echo "คุณเลือกรหัสเกณท์&nbsp;", $_SESSION['Numg'] = $result['G_code'], "&emsp;", "A :&nbsp", $result['A'], "&emsp;", "B+:&nbsp", $result['B+'], "&emsp;", "B:&nbsp", $result['B'], "&emsp;", "C+:&nbsp", $result['C+'], "&emsp;", "C:&nbsp", $result['C'], "&emsp;", "D+:&nbsp", $result['D+'], "&emsp;", "D:&nbsp", $result['D'], "&emsp;";
       } else
         echo "Select an option first !!";
     } else {
-      echo "โปรดเลือกเกณฑ์";
+      echo "เกณฑ์ Defult ",$_SESSION['Numg'] = $resultD['G_code'] ,"&nbsp;=&nbsp;", "A :&nbsp", $resultD['A'], "&emsp;", "B+:&nbsp", $resultD['B+'], "&emsp;", "B:&nbsp", $resultD['B'], "&emsp;", "C+:&nbsp", $resultD['C+'], "&emsp;", "C:&nbsp", $resultD['C'], "&emsp;", "D+:&nbsp", $resultD['D+'], "&emsp;", "D:&nbsp", $resultD['D'];
     }
     ?>
+
+    
   </div>
   <div class="eiei p-5 mt-5">
     <table class="table table-bordered mt-3">
@@ -170,9 +180,49 @@ $resultsub = $querysub->FETCH_ASSOC();
             จัดการ</a>
       </td>
     </tr>
-  <?php } ?>
+  <?php 
+  if($resultgrade['grade_font']=='A'){
+    $GA = $GA+1;
+  }
+  if($resultgrade['grade_font']=='B+'){
+    $GBP = $GBP+1;
+  }
+  
+  if($resultgrade['grade_font']=='B'){
+    $GB = $GB+1;
+  }
+  if($resultgrade['grade_font']=='C+'){
+    $GCP = $GCP+1;
+  }
+  if($resultgrade['grade_font']=='C'){
+    $GC = $GC+1;
+  }
+  if($resultgrade['grade_font']=='D+'){
+    $GDP = $GDP+1;
+  }
+  if($resultgrade['grade_font']=='D'){
+    $GD = $GD+1;
+  }
+  if($resultgrade['grade_font']=='F')
+  {
+    $GF = $GF+1;
+  }
+
+} ?>
   </table>
   </div>
+<?php
+echo "คนที่ให้เกรด A =",$GA;
+echo "&emsp;","คนที่ให้เกรด B+ =",$GBP;
+echo "&emsp;","คนที่ให้เกรด B =",$GB;
+echo "&emsp;","คนที่ให้เกรด C+ =",$GCP;
+echo "&emsp;","คนที่ให้เกรด C =",$GC;
+echo "&emsp;","คนที่ให้เกรด D+ =",$GDP;
+echo "&emsp;","คนที่ให้เกรด D =",$GD;
+echo "&emsp;","คนที่ให้เกรด F =",$GF;
+
+?>
+
 </body>
 
 </html>
