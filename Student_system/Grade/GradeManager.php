@@ -207,6 +207,11 @@ $resultsub = $querysub->FETCH_ASSOC();
       </td>
       <td>
         <div align="center">
+          <?php
+         $_SESSION['SubCodeED'] = $ID ;
+         $_SESSION['StdCode']=$resultG['Std_code'];
+          ?>
+
           <a class="btn btn-info" href="./AddScore.php?Grade=<?php echo $resultgrade['GPA']; ?>&SubCodeED=<?php echo $ID; ?>&SubName=<?php echo $resultsub['Sub_Name']; ?>&StdCode=<?php echo $resultG['Std_code']; ?>&Term=<?php echo $resultG['Cos_term']; ?>">
             จัดการ</a>
       </td>
