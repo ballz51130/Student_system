@@ -1,10 +1,38 @@
 <?php
 session_start();
 include_once('../conn/connect.php');
-$GA = 0;$GBP = 0;$GB = 0;$GCP = 0;$GC = 0;$GDP = 0;$GD = 0;$GF = 0;
-$GASE = 0;$GBPSE = 0;$GBSE = 0;$GCPSE = 0;$GCSE = 0;$GDPSE = 0;$GDSE = 0;$GFSE = 0;
-$GAE = 0;$GBPE = 0;$GBE = 0;$GCPE = 0;$GCE = 0;$GDPE = 0;$GDE = 0;$GFE = 0;
-$GAA = 0;$GBPA = 0;$GBA = 0;$GCPA = 0;$GCA = 0;$GDPA = 0;$GDA = 0;$GFA = 0;
+$GA = 0;
+$GBP = 0;
+$GB = 0;
+$GCP = 0;
+$GC = 0;
+$GDP = 0;
+$GD = 0;
+$GF = 0;
+$GASE = 0;
+$GBPSE = 0;
+$GBSE = 0;
+$GCPSE = 0;
+$GCSE = 0;
+$GDPSE = 0;
+$GDSE = 0;
+$GFSE = 0;
+$GAE = 0;
+$GBPE = 0;
+$GBE = 0;
+$GCPE = 0;
+$GCE = 0;
+$GDPE = 0;
+$GDE = 0;
+$GFE = 0;
+$GAA = 0;
+$GBPA = 0;
+$GBA = 0;
+$GCPA = 0;
+$GCA = 0;
+$GDPA = 0;
+$GDA = 0;
+$GFA = 0;
 $ID = $_GET['ID'];
 $_SESSION['SubName'] = $_GET['SubName'];
 
@@ -56,19 +84,19 @@ $resultsub = $querysub->FETCH_ASSOC();
 
     // Check if form is submitted successfully 
     if (isset($_POST["submit"])) {
-     
+
       if (isset($_POST["subject"])) {
-       
+
         // Retrieving each selected option 
-        
-       // return false;
+
+        // return false;
         foreach ($_POST['subject'] as $subject)
           $sql = "SELECT * FROM edit_grade WHERE G_code ='" . $subject . "'";
         $query = mysqli_query($conn, $sql);
         $result = mysqli_fetch_array($query, MYSQLI_ASSOC);
         echo "คุณเลือกรหัสเกณท์&nbsp;", $_SESSION['Numg'] = $result['G_code'], "&emsp;", "A :&nbsp", $result['A'], "&emsp;", "B+:&nbsp", $result['B+'], "&emsp;", "B:&nbsp", $result['B'], "&emsp;", "C+:&nbsp", $result['C+'], "&emsp;", "C:&nbsp", $result['C'], "&emsp;", "D+:&nbsp", $result['D+'], "&emsp;", "D:&nbsp", $result['D'], "&emsp;";
-        $sqlup= "UPDATE `course_tb` SET Garde_code = '" . $subject . "' WHERE Cos_term = '".$_SESSION['Term']."' AND Sub_Code = '".$_SESSION['SubCodeED']."' ";
-        $queryup  = mysqli_query($conn,$sqlup);
+        $sqlup = "UPDATE `course_tb` SET Garde_code = '" . $subject . "' WHERE Cos_term = '" . $_SESSION['Term'] . "' AND Sub_Code = '" . $_SESSION['SubCodeED'] . "' ";
+        $queryup  = mysqli_query($conn, $sqlup);
       } else
         echo "Select an option first !!";
     } else {
@@ -82,7 +110,7 @@ $resultsub = $querysub->FETCH_ASSOC();
         <tr>
   </div>
 
-  
+
 
   <th scope="col">
     <div align="center">รหัสแผนการเรียน
@@ -203,10 +231,9 @@ $resultsub = $querysub->FETCH_ASSOC();
             } else {
               echo  "F";
               $Gaede_front = "F";
-              
             }
-$sqlGF = "UPDATE `grade_tb` SET `grade_font`= '$Gaede_front' WHERE Std_code = '".$resultG['Std_code']."' AND Sub_code = '".$ID."'";
-$queryGF = $conn->query($sqlGF);
+            $sqlGF = "UPDATE `grade_tb` SET `grade_font`= '$Gaede_front' WHERE Std_code = '" . $resultG['Std_code'] . "' AND Sub_code = '" . $ID . "'";
+            $queryGF = $conn->query($sqlGF);
 
             ?>
 
@@ -215,9 +242,9 @@ $queryGF = $conn->query($sqlGF);
       <td>
         <div align="center">
           <?php
-         $_SESSION['SubCodeED'] = $ID ;
-         $_SESSION['StdCode']=$resultG['Std_code'];
-          ?>
+            $_SESSION['SubCodeED'] = $ID;
+            $_SESSION['StdCode'] = $resultG['Std_code'];
+            ?>
 
           <a class="btn btn-info" href="./AddScore.php?Grade=<?php echo $resultgrade['GPA']; ?>&SubCodeED=<?php echo $ID; ?>&SubName=<?php echo $resultsub['Sub_Name']; ?>&StdCode=<?php echo $resultG['Std_code']; ?>&Term=<?php echo $resultG['Cos_term']; ?>">
             จัดการ</a>
@@ -249,15 +276,15 @@ $queryGF = $conn->query($sqlGF);
     if ($Gaede_front == 'F') {
       $GF = $GF + 1;
     }
-    if($resultG['Cos_name']=='วิศวกรรมซอฟต์แวร์ 2560'){
-      $numSE =$numSE+1;
+    if ($resultG['Cos_name'] == 'วิศวกรรมซอฟต์แวร์ 2560') {
+      $numSE = $numSE + 1;
       if ($Gaede_front == 'A') {
         $SEGA = $GASE + 1;
       }
       if ($Gaede_front == 'B+') {
         $GBPSE = $GBPSE + 1;
       }
-  
+
       if ($Gaede_front == 'B') {
         $GBSE = $GBSE + 1;
       }
@@ -277,69 +304,65 @@ $queryGF = $conn->query($sqlGF);
         $GFSE = $GFSE + 1;
       }
     }
-      if($resultG['Cos_name']=='อังกฤษเพื่อคนอื่น'){
-        $numE =$numE+1;
-        if ($Gaede_front == 'A') {
-          $GAE = $GAE + 1;
-        }
-        if ($Gaede_front == 'B+') {
-          $GBPE = $GBPE + 1;
-        }
-    
-        if ($Gaede_front == 'B') {
-          $GBE = $GBE + 1;
-        }
-        if ($Gaede_front == 'C+') {
-          $GCPE = $GCPE + 1;
-        }
-        if ($Gaede_front == 'C') {
-          $GCE = $GCE + 1;
-        }
-        if ($Gaede_front == 'D+') {
-          $GDPE = $GDPE + 1;
-        }
-        if ($Gaede_front == 'D') {
-          $GDE = $GDE + 1;
-        }
-        if ($Gaede_front == 'F') {
-          $GFE = $GFE + 1;
-        }
-
+    if ($resultG['Cos_name'] == 'อังกฤษเพื่อคนอื่น') {
+      $numE = $numE + 1;
+      if ($Gaede_front == 'A') {
+        $GAE = $GAE + 1;
       }
-      if($resultG['Cos_name']=='Area 51'){
-        $numA =$numA+1;
-        if ($Gaede_front == 'A') {
-          $GAA = $GAA + 1;
-        }
-        if ($Gaede_front == 'B+') {
-          $GBPA = $GBPA + 1;
-        }
-    
-        if ($Gaede_front == 'B') {
-          $GBA = $GBA + 1;
-        }
-        if ($Gaede_front == 'C+') {
-          $GCPA = $GCPA + 1;
-        }
-        if ($Gaede_front == 'C') {
-          $GCA = $GCA + 1;
-        }
-        if ($Gaede_front == 'D+') {
-          $GDPA = $GDPA + 1;
-        }
-        if ($Gaede_front == 'D') {
-          $GDA = $GDA + 1;
-        }
-        if ($Gaede_front == 'F') {
-          $GFA = $GFA + 1;
-        }
-
+      if ($Gaede_front == 'B+') {
+        $GBPE = $GBPE + 1;
       }
-    
 
+      if ($Gaede_front == 'B') {
+        $GBE = $GBE + 1;
+      }
+      if ($Gaede_front == 'C+') {
+        $GCPE = $GCPE + 1;
+      }
+      if ($Gaede_front == 'C') {
+        $GCE = $GCE + 1;
+      }
+      if ($Gaede_front == 'D+') {
+        $GDPE = $GDPE + 1;
+      }
+      if ($Gaede_front == 'D') {
+        $GDE = $GDE + 1;
+      }
+      if ($Gaede_front == 'F') {
+        $GFE = $GFE + 1;
+      }
+    }
+    if ($resultG['Cos_name'] == 'Area 51') {
+      $numA = $numA + 1;
+      if ($Gaede_front == 'A') {
+        $GAA = $GAA + 1;
+      }
+      if ($Gaede_front == 'B+') {
+        $GBPA = $GBPA + 1;
+      }
+
+      if ($Gaede_front == 'B') {
+        $GBA = $GBA + 1;
+      }
+      if ($Gaede_front == 'C+') {
+        $GCPA = $GCPA + 1;
+      }
+      if ($Gaede_front == 'C') {
+        $GCA = $GCA + 1;
+      }
+      if ($Gaede_front == 'D+') {
+        $GDPA = $GDPA + 1;
+      }
+      if ($Gaede_front == 'D') {
+        $GDA = $GDA + 1;
+      }
+      if ($Gaede_front == 'F') {
+        $GFA = $GFA + 1;
+      }
+    }
   } ?>
   </table>
-  
+
   <div class="modal" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -361,104 +384,136 @@ $queryGF = $conn->query($sqlGF);
     </div>
   </div>
   <center>
-  <div class="container">
-    <!-- Trigger the modal with a button -->
-    <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Report</button>
-    <!-- Modal -->
-    <div class="modal fade" id="myModal" role="dialog">
-      <div class="modal-dialog">
-        <!-- Modal content-->
-        <div class="modal-content">
+    <div class="container">
+      <!-- Trigger the modal with a button -->
+      <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Report</button>
+      <!-- Modal -->
+      <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog">
+          <!-- Modal content-->
+          <div class="modal-content">
 
-          <div class="modal-body">
-            <?php
-            echo "มีนักศึกษาทั้งหมด", $rowSum,"<br>";
-            if($GA !=0){
-            echo "&emsp;", "ได้เกรด A&nbsp;&nbsp;=",$GA,"<br>" ;}else{}
-            if($GBP !=0){
-            echo "&emsp;", "ได้เกรด B+=",$GBP,"<br>";}else{}
-              if($GB !=0){
-            echo "&emsp;", "ได้เกรด B&nbsp;&nbsp;=",$GB,"<br>";}else{}
-              if($GCP !=0){
-            echo "&emsp;", "ได้เกรด C+=",$GCP,"<br>";}else{}
-              if($GC !=0){
-            echo "&emsp;", "ได้เกรด C&nbsp;&nbsp;=",$GC,"<br>";}else{}
-              if($GDP !=0){
-            echo "&emsp;", "ได้เกรด D+=",$GDP,"<br>";}else{}
-              if($GD !=0){
-            echo "&emsp;", "ได้เกรด D&nbsp;&nbsp;=",$GD,"<br>";}else{}
-              if($GF !=0){
-            echo "&emsp;", "ได้เกรด F&nbsp;&nbsp;=",$GF,"<br>";}else{}
+            <div class="modal-body">
+              <?php
+              echo "มีนักศึกษาทั้งหมด", $rowSum, "<br>";
+              if ($GA != 0) {
+                echo "&emsp;", "ได้เกรด A&nbsp;&nbsp;=", $GA, "<br>";
+              } else { }
+              if ($GBP != 0) {
+                echo "&emsp;", "ได้เกรด B+=", $GBP, "<br>";
+              } else { }
+              if ($GB != 0) {
+                echo "&emsp;", "ได้เกรด B&nbsp;&nbsp;=", $GB, "<br>";
+              } else { }
+              if ($GCP != 0) {
+                echo "&emsp;", "ได้เกรด C+=", $GCP, "<br>";
+              } else { }
+              if ($GC != 0) {
+                echo "&emsp;", "ได้เกรด C&nbsp;&nbsp;=", $GC, "<br>";
+              } else { }
+              if ($GDP != 0) {
+                echo "&emsp;", "ได้เกรด D+=", $GDP, "<br>";
+              } else { }
+              if ($GD != 0) {
+                echo "&emsp;", "ได้เกรด D&nbsp;&nbsp;=", $GD, "<br>";
+              } else { }
+              if ($GF != 0) {
+                echo "&emsp;", "ได้เกรด F&nbsp;&nbsp;=", $GF, "<br>";
+              } else { }
 
-            echo "นักศึกษาวิศวกรรมซอฟต์แวร์ 2560","&nbsp;&nbsp;จำนวน&nbsp;&nbsp;",$numSE,"<br>";
-            if($GASE !=0){
-            echo "&emsp;", "ได้เกรด A&nbsp;&nbsp;=",$GASE,"<br>" ;}else{}
-            if($GBPSE !=0){
-            echo "&emsp;", "ได้เกรด B+=",$GBPSE,"<br>";}else{}
-            if($GBSE !=0){
-            echo "&emsp;", "ได้เกรด B&nbsp;&nbsp;=",$GBSE,"<br>";}else{}
-            if($GCPSE !=0){
-            echo "&emsp;", "ได้เกรด C+=",$GCPSE,"<br>";}else{}
-            if($GCSE !=0){
-            echo "&emsp;", "ได้เกรด C&nbsp;&nbsp;=",$GCSE,"<br>";}else{}
-            if($GDPSE !=0){
-            echo "&emsp;", "ได้เกรด D+=",$GDPSE,"<br>";}else{}
-            if($GDSE !=0){
-            echo "&emsp;", "ได้เกรด D&nbsp;&nbsp;=",$GDSE,"<br>";}else{}
-            if($GFSE !=0){
-            echo "&emsp;", "ได้เกรด F&nbsp;&nbsp;=",$GFSE,"<br>";}else{}
+              echo "นักศึกษาวิศวกรรมซอฟต์แวร์ 2560", "&nbsp;&nbsp;จำนวน&nbsp;&nbsp;", $numSE, "<br>";
+              if ($GASE != 0) {
+                echo "&emsp;", "ได้เกรด A&nbsp;&nbsp;=", $GASE, "<br>";
+              } else { }
+              if ($GBPSE != 0) {
+                echo "&emsp;", "ได้เกรด B+=", $GBPSE, "<br>";
+              } else { }
+              if ($GBSE != 0) {
+                echo "&emsp;", "ได้เกรด B&nbsp;&nbsp;=", $GBSE, "<br>";
+              } else { }
+              if ($GCPSE != 0) {
+                echo "&emsp;", "ได้เกรด C+=", $GCPSE, "<br>";
+              } else { }
+              if ($GCSE != 0) {
+                echo "&emsp;", "ได้เกรด C&nbsp;&nbsp;=", $GCSE, "<br>";
+              } else { }
+              if ($GDPSE != 0) {
+                echo "&emsp;", "ได้เกรด D+=", $GDPSE, "<br>";
+              } else { }
+              if ($GDSE != 0) {
+                echo "&emsp;", "ได้เกรด D&nbsp;&nbsp;=", $GDSE, "<br>";
+              } else { }
+              if ($GFSE != 0) {
+                echo "&emsp;", "ได้เกรด F&nbsp;&nbsp;=", $GFSE, "<br>";
+              } else { }
 
-            
-            echo "อังกฤษเพื่อคนอื่น","&nbsp;&nbsp;จำนวน&nbsp;&nbsp;",$numE,"<br>";
-            if($GAE !=0){
-              echo "&emsp;", "ได้เกรด A&nbsp;&nbsp;=",$GAE,"<br>" ;}else{}
-              if($GBPE !=0){
-              echo "&emsp;", "ได้เกรด B+=",$GBPE,"<br>";}else{}
-              if($GBE !=0){
-              echo "&emsp;", "ได้เกรด B&nbsp;&nbsp;=",$GBE,"<br>";}else{}
-              if($GCPE !=0){
-              echo "&emsp;", "ได้เกรด C+=",$GCPE,"<br>";}else{}
-              if($GCE !=0){
-              echo "&emsp;", "ได้เกรด C&nbsp;&nbsp;=",$GCE,"<br>";}else{}
-              if($GDPSE !=0){
-              echo "&emsp;", "ได้เกรด D+=",$GDPE,"<br>";}else{}
-              if($GDE !=0){
-              echo "&emsp;", "ได้เกรด D&nbsp;&nbsp;=",$GDSE,"<br>";}else{}
-              if($GFE !=0){
-              echo "&emsp;", "ได้เกรด F&nbsp;&nbsp;=",$GFE,"<br>";}else{}
-              echo "Area 51","&nbsp;&nbsp;จำนวน&nbsp;&nbsp;",$numA,"<br>";
-              if($GAA !=0){
-                echo "&emsp;", "ได้เกรด A&nbsp;&nbsp;=",$GAA,"<br>" ;}else{}
-                if($GBPA !=0){
-                echo "&emsp;", "ได้เกรด B+=",$GBPA,"<br>";}else{}
-                if($GBA !=0){
-                echo "&emsp;", "ได้เกรด B&nbsp;&nbsp;=",$GBA,"<br>";}else{}
-                if($GCPA !=0){
-                echo "&emsp;", "ได้เกรด C+=",$GCPA,"<br>";}else{}
-                if($GCA !=0){
-                echo "&emsp;", "ได้เกรด C&nbsp;&nbsp;=",$GCA,"<br>";}else{}
-                if($GDPSA !=0){
-                echo "&emsp;", "ได้เกรด D+=",$GDPA,"<br>";}else{}
-                if($GDA !=0){
-                echo "&emsp;", "ได้เกรด D&nbsp;&nbsp;=",$GDSA,"<br>";}else{}
-                if($GFA !=0){
-                echo "&emsp;", "ได้เกรด F&nbsp;&nbsp;=",$GFA,"<br>";}else{}
-  
 
-            ?>
+              echo "อังกฤษเพื่อคนอื่น", "&nbsp;&nbsp;จำนวน&nbsp;&nbsp;", $numE, "<br>";
+              if ($GAE != 0) {
+                echo "&emsp;", "ได้เกรด A&nbsp;&nbsp;=", $GAE, "<br>";
+              } else { }
+              if ($GBPE != 0) {
+                echo "&emsp;", "ได้เกรด B+=", $GBPE, "<br>";
+              } else { }
+              if ($GBE != 0) {
+                echo "&emsp;", "ได้เกรด B&nbsp;&nbsp;=", $GBE, "<br>";
+              } else { }
+              if ($GCPE != 0) {
+                echo "&emsp;", "ได้เกรด C+=", $GCPE, "<br>";
+              } else { }
+              if ($GCE != 0) {
+                echo "&emsp;", "ได้เกรด C&nbsp;&nbsp;=", $GCE, "<br>";
+              } else { }
+              if ($GDPSE != 0) {
+                echo "&emsp;", "ได้เกรด D+=", $GDPE, "<br>";
+              } else { }
+              if ($GDE != 0) {
+                echo "&emsp;", "ได้เกรด D&nbsp;&nbsp;=", $GDSE, "<br>";
+              } else { }
+              if ($GFE != 0) {
+                echo "&emsp;", "ได้เกรด F&nbsp;&nbsp;=", $GFE, "<br>";
+              } else { }
+              echo "Area 51", "&nbsp;&nbsp;จำนวน&nbsp;&nbsp;", $numA, "<br>";
+              if ($GAA != 0) {
+                echo "&emsp;", "ได้เกรด A&nbsp;&nbsp;=", $GAA, "<br>";
+              } else { }
+              if ($GBPA != 0) {
+                echo "&emsp;", "ได้เกรด B+=", $GBPA, "<br>";
+              } else { }
+              if ($GBA != 0) {
+                echo "&emsp;", "ได้เกรด B&nbsp;&nbsp;=", $GBA, "<br>";
+              } else { }
+              if ($GCPA != 0) {
+                echo "&emsp;", "ได้เกรด C+=", $GCPA, "<br>";
+              } else { }
+              if ($GCA != 0) {
+                echo "&emsp;", "ได้เกรด C&nbsp;&nbsp;=", $GCA, "<br>";
+              } else { }
+              if ($GDPSA != 0) {
+                echo "&emsp;", "ได้เกรด D+=", $GDPA, "<br>";
+              } else { }
+              if ($GDA != 0) {
+                echo "&emsp;", "ได้เกรด D&nbsp;&nbsp;=", $GDSA, "<br>";
+              } else { }
+              if ($GFA != 0) {
+                echo "&emsp;", "ได้เกรด F&nbsp;&nbsp;=", $GFA, "<br>";
+              } else { }
 
+
+              ?>
+
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
           </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          </div>
+
         </div>
-
       </div>
-    </div>
 
-  </div>
-  </div>
-                </center>
+    </div>
+    </div>
+  </center>
   <?php
   // echo "คนที่ให้เกรด A =",$GA;
   // echo "&emsp;","คนที่ให้เกรด B+ =",$GBP;
