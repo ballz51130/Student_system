@@ -56,14 +56,19 @@ $resultsub = $querysub->FETCH_ASSOC();
 
     // Check if form is submitted successfully 
     if (isset($_POST["submit"])) {
-
+     
       if (isset($_POST["subject"])) {
+       
         // Retrieving each selected option 
+        
+       // return false;
         foreach ($_POST['subject'] as $subject)
           $sql = "SELECT * FROM edit_grade WHERE G_code ='" . $subject . "'";
         $query = mysqli_query($conn, $sql);
         $result = mysqli_fetch_array($query, MYSQLI_ASSOC);
         echo "คุณเลือกรหัสเกณท์&nbsp;", $_SESSION['Numg'] = $result['G_code'], "&emsp;", "A :&nbsp", $result['A'], "&emsp;", "B+:&nbsp", $result['B+'], "&emsp;", "B:&nbsp", $result['B'], "&emsp;", "C+:&nbsp", $result['C+'], "&emsp;", "C:&nbsp", $result['C'], "&emsp;", "D+:&nbsp", $result['D+'], "&emsp;", "D:&nbsp", $result['D'], "&emsp;";
+        $sqlup= "UPDATE `course_tb` SET Garde_code = '" . $subject . "' WHERE Cos_term = '".$_SESSION['Term']."' AND Sub_Code = '".$_SESSION['SubCodeED']."' ";
+        $queryup  = mysqli_query($conn,$sqlup);
       } else
         echo "Select an option first !!";
     } else {
@@ -200,6 +205,8 @@ $resultsub = $querysub->FETCH_ASSOC();
               $Gaede_front = "F";
               
             }
+$sqlGF = "UPDATE `grade_tb` SET `grade_font`= '$Gaede_front' WHERE Std_code = '".$resultG['Std_code']."' AND Sub_code = '".$ID."'";
+$queryGF = $conn->query($sqlGF);
 
             ?>
 
@@ -332,6 +339,7 @@ $resultsub = $querysub->FETCH_ASSOC();
 
   } ?>
   </table>
+  
   <div class="modal" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -366,8 +374,7 @@ $resultsub = $querysub->FETCH_ASSOC();
             <?php
             echo "มีนักศึกษาทั้งหมด", $rowSum,"<br>";
             if($GA !=0){
-            echo "&emsp;", "ได้เกรด A&nbsp;&nbsp;=",$GA,"<br>" ;
-            }else{}
+            echo "&emsp;", "ได้เกรด A&nbsp;&nbsp;=",$GA,"<br>" ;}else{}
             if($GBP !=0){
             echo "&emsp;", "ได้เกรด B+=",$GBP,"<br>";}else{}
               if($GB !=0){
@@ -419,7 +426,7 @@ $resultsub = $querysub->FETCH_ASSOC();
               echo "&emsp;", "ได้เกรด D&nbsp;&nbsp;=",$GDSE,"<br>";}else{}
               if($GFE !=0){
               echo "&emsp;", "ได้เกรด F&nbsp;&nbsp;=",$GFE,"<br>";}else{}
-              echo "อังกฤษเพื่อคนอื่น","&nbsp;&nbsp;จำนวน&nbsp;&nbsp;",$numA,"<br>";
+              echo "Area 51","&nbsp;&nbsp;จำนวน&nbsp;&nbsp;",$numA,"<br>";
               if($GAA !=0){
                 echo "&emsp;", "ได้เกรด A&nbsp;&nbsp;=",$GAA,"<br>" ;}else{}
                 if($GBPA !=0){
@@ -451,7 +458,7 @@ $resultsub = $querysub->FETCH_ASSOC();
 
   </div>
   </div>
-  <center>
+                </center>
   <?php
   // echo "คนที่ให้เกรด A =",$GA;
   // echo "&emsp;","คนที่ให้เกรด B+ =",$GBP;
